@@ -130,7 +130,6 @@ def play_one_game(tech_cards, rng):
     net = hits * NET_ON_HIT + misses * NET_ON_MISS
 
     return {
-        "turns": turn,
         "uses": uses,
         "hits": hits,
         "misses": misses,
@@ -148,7 +147,7 @@ def simulate(tech_cards, rng):
     the averages.
     """
     # Running totals across every game. Same keys that play_one_game hands back.
-    totals = {"turns": 0, "uses": 0, "hits": 0, "misses": 0, "net": 0}
+    totals = {"uses": 0, "hits": 0, "misses": 0, "net": 0}
     games_with_a_miss = 0   # games where at least one reveal missed
 
     for _ in range(GAMES_PER_ROW):
@@ -173,7 +172,6 @@ def simulate(tech_cards, rng):
         "net_per_use": totals["net"] / totals["uses"],
 
         # Per-game averages.
-        "avg_turns": totals["turns"] / GAMES_PER_ROW,
         "avg_uses": totals["uses"] / GAMES_PER_ROW,
         "avg_hits": totals["hits"] / GAMES_PER_ROW,
         "avg_misses": totals["misses"] / GAMES_PER_ROW,
@@ -194,16 +192,15 @@ def main():
           f"Max turns: {turn_limit}   "
           f"Games per row: {GAMES_PER_ROW:,}")
     print()
-    print("  tech   miss      miss at least   avg     avg     avg     avg      NET per   NET per")
-    print("  cards  per use   once per game   turns   uses    hits    misses   use       game")
-    print("  -----  -------   -------------   -----   -----   -----   ------   -------   -------")
+    print("  tech   miss      miss at least   avg     avg     avg      NET per   NET per")
+    print("  cards  per use   once per game   uses    hits    misses   use       game")
+    print("  -----  -------   -------------   -----   -----   ------   -------   -------")
 
     for tech_cards in TECH_CARD_COUNTS:
         r = simulate(tech_cards, rng)
         print(f"  {tech_cards:5d}"
               f"  {r['miss_chance_per_use']:7.1%}"
               f"   {r['chance_of_any_miss']:13.1%}"
-              f"   {r['avg_turns']:5.2f}"
               f"   {r['avg_uses']:5.2f}"
               f"   {r['avg_hits']:5.2f}"
               f"   {r['avg_misses']:6.2f}"
