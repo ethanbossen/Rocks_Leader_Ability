@@ -262,7 +262,5 @@ def main():
               f"   {r['net_per_use']:+7.2f}"
               f"   {r['avg_net']:+7.2f}")
 
-
-# This means "run main() when this file is run directly".
 if __name__ == "__main__":
     main()
